@@ -446,8 +446,9 @@
     !
     interface FastEthernet0/1
     ip dhcp snooping trust
+    exit
     !
-    interface FastEthernet X/X
+    interface FastEthernet X/X (Interface yang terhubung ke PC)
     ip dhcp snooping limit rate 10
 
 ---
@@ -455,11 +456,12 @@
 ### 7. Konfigurasi Port Security
 **Swicth**
 
-    interface FastEthernet X/X
+    interface FastEthernet X/X (Interface yang terhubung ke PC)
     switchport mode access
     switchport port-security
     switchport port-security maximum 2
     switchport port-security mac-address sticky
     switchport port-security violation restrict
+    end
     !
  
