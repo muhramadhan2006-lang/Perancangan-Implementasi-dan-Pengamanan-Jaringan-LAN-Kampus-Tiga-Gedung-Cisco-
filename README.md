@@ -80,9 +80,28 @@
 | **Server DHCP** | Server / L3 Device | 1 | Layanan DHCP |
 
 ## Topologi yang digunakan
-<img width="1891" height="805" alt="image" src="https://github.com/user-attachments/assets/63db0689-1807-4fc3-9b0b-7ee047323f89" />
+<img width="1882" height="792" alt="image" src="https://github.com/user-attachments/assets/bdb1be82-8283-474d-beb1-8d1c2a4cc76e" />
 
-
+## Konfigurasi di Cisco Paket Tracer
+### 1. Konfigurasi Trunking
+**Konfigurasi Trunking Pada MLS Building A dan Building B**
+```text
+interface FastEthernet0/2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+!
+interface FastEthernet0/3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+!
+interface FastEthernet0/4
+switchport trunk encapsulation dot1q
+switchport mode trunk
+!
+interface FastEthernet0/5
+switchport trunk encapsulation dot1q
+switchport mode trunk
+!
 
 
 
