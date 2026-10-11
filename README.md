@@ -85,7 +85,7 @@
 ## Konfigurasi di Cisco Paket Tracer
 ### 1. Konfigurasi Trunking
 
-**Konfigurasi Trunking Pada MLS Building A dan Building B**[cite: 33]
+**Konfigurasi Trunking Pada MLS Building A dan Building B**
 
     interface FastEthernet0/2
     switchport trunk encapsulation dot1q
@@ -103,7 +103,7 @@
     switchport trunk encapsulation dot1q
     switchport mode trunk
 
-**Konfigurasi Trunking Pada MLS Building C**[cite: 33]
+**Konfigurasi Trunking Pada MLS Building C**
 
     interface FastEthernet0/2
     switchport trunk encapsulation dot1q
@@ -112,12 +112,17 @@
     interface FastEthernet0/3
     switchport trunk encapsulation dot1q
     switchport mode trunk
+    
+**Konfigurasi Trunking Pada Switch Building A, B dan C (Switch Vlan 10, 20, 30, 40, 110, 120, 130, 140, 210,220)**
 
+    interface FastEthernet0/1
+    switchport mode trunk
+    !
 ---
 
 ### 2. Konfigurasi VLAN, SVI, dan DHCP Helper-Address (Multilayer Switch)
 
-**MLS Building A**[cite: 34]
+**MLS Building A**
 
     interface Vlan10
     ip address 192.168.0.1 255.255.255.128
@@ -134,8 +139,26 @@
     interface Vlan40
     ip address 192.168.1.65 255.255.255.240
     ip helper-address 192.168.3.162
+    
+**MLS Building A Switch Vlan 10**
 
-**MLS Building B**[cite: 35]
+    interface FastEthernet X/X (Interface yang terhubung ke semua PC A-Fl.1)
+    switchport access vlan 10
+    switchport mode access
+    !
+    interface FastEthernet X/X (Interface yang terhubung ke beberapa PC A-F1.2)
+    switchport access vlan 20
+    switchport mode access
+    !
+
+**MLS Building A Switch Vlan 20, 30, dan 40**
+
+    interface FastEthernet X/X (Interface yang terhubung ke PC VLAN 20,30,40)
+    switchport access vlan X (20,30,40)
+    switchport mode access
+    !
+  
+**MLS Building B**
 
     interface Vlan110
     ip address 192.168.2.1 255.255.255.0
@@ -152,7 +175,25 @@
     interface Vlan140
     ip address 192.168.3.161 255.255.255.240
 
-**MLS Building C**[cite: 36]
+**MLS Building B Switch Vlan 110**
+
+    interface FastEthernet X/X (Interface yang terhubung ke semua PC B-Fl.1)
+    switchport access vlan 110
+    switchport mode access
+    !
+    interface FastEthernet X/X (Interface yang terhubung ke beberapa PC B-F1.2)
+    switchport access vlan 120
+    switchport mode access
+    !
+
+**MLS Building B Switch Vlan 120, 130, dan 140**
+
+    interface FastEthernet X/X (Interface yang terhubung ke PC VLAN 120,130,140)
+    switchport access vlan X (120,130,140)
+    switchport mode access
+    !
+
+**MLS Building C**
 
     interface Vlan210
     ip address 172.16.0.1 255.255.254.0
@@ -162,11 +203,102 @@
     ip address 192.168.4.1 255.255.255.0
     ip helper-address 192.168.3.162
 
+**MLS Building C Switch Vlan 210**
+
+    interface FastEthernet X/X (Interface yang terhubung ke semua PC C-Fl.1)
+    switchport access vlan 210
+    switchport mode access
+    !
+    interface FastEthernet X/X (Interface yang terhubung ke beberapa PC C-F1.2)
+    switchport access vlan 220
+    switchport mode access
+    !
+
+**MLS Building C Switch Vlan 220**
+
+    interface FastEthernet X/X (Interface yang terhubung ke PC C-F1.2)
+    switchport access vlan 220
+    switchport mode access
+    !
+
 ---
 
-### 3. Konfigurasi Routing OSPF Multi-Area & Autentikasi MD5
+### 3. Konfigurasi Konfigurasi IP Addressing
 
-**Router Building A**[cite: 42]
+**Router Building A**
+
+**Router Building A**
+
+      interface GigabitEthernet0/0/0
+      ip address 10.1.0.5 255.255.255.252
+      duplex auto
+      speed auto
+      !
+      interface GigabitEthernet0/0/1
+      ip address 10.1.0.2 255.255.255.252
+      duplex auto
+      speed auto
+
+
+**Router Building B**
+
+      interface GigabitEthernet0/0
+      ip address 10.1.1.2 255.255.255.252
+      duplex auto
+      speed auto
+      !
+      interface GigabitEthernet0/1
+      ip address 10.1.0.6 255.255.255.252
+      duplex auto
+      speed auto
+      !
+      interface GigabitEthernet0/2
+      ip address 10.1.2.1 255.255.255.252
+      duplex auto
+      speed auto
+
+
+**Router Building C**
+
+      interface GigabitEthernet0/0/0
+      ip address 10.1.2.2 255.255.255.252
+      duplex auto
+      speed auto
+      !
+      interface GigabitEthernet0/0/1
+      ip address 10.1.3.2 255.255.255.252
+      duplex auto
+      speed auto
+
+
+**Multilayer Switch (MLS Building A)**
+
+    interface FastEthernet0/1
+    no switchport
+    ip address 10.1.0.1 255.255.255.252
+    duplex auto
+
+**Multilayer Switch (MLS Building B)**
+
+    interface FastEthernet0/1
+    no switchport
+    ip address 10.1.1.1 255.255.255.252
+    duplex auto
+
+
+**Multilayer Switch (MLS Building C)**
+
+    interface FastEthernet0/1
+    no switchport
+    ip address 10.1.3.1 255.255.255.252
+    duplex auto
+
+
+---
+
+### 4. Konfigurasi Routing OSPF Multi-Area & Autentikasi MD5
+
+**Router Building A**
 
     router ospf 1
     router-id 11.11.11.11
@@ -181,7 +313,7 @@
     interface GigabitEthernet0/0/0
     ip ospf message-digest-key 1 md5 CNIS2026
 
-**Router Building B**[cite: 42]
+**Router Building B**
 
     router ospf 1
     router-id 22.22.22.22
@@ -200,7 +332,7 @@
     interface GigabitEthernet0/2
     ip ospf message-digest-key 1 md5 CNIS2026
 
-**Router Building C**[cite: 43]
+**Router Building C**
 
     router ospf 1
     router-id 33.33.33.33
@@ -215,7 +347,7 @@
     interface GigabitEthernet0/0/1
     ip ospf message-digest-key 1 md5 CNIS2026
 
-**Multilayer Switch (MLS Building A)**[cite: 43]
+**Multilayer Switch (MLS Building A)**
 
     router ospf 1
     router-id 1.1.1.1
@@ -231,7 +363,7 @@
     interface FastEthernet0/1
     ip ospf message-digest-key 1 md5 CNIS2026
 
-**Multilayer Switch (MLS Building B)**[cite: 43, 44]
+**Multilayer Switch (MLS Building B)**
 
     router ospf 1
     router-id 2.2.2.2
@@ -247,7 +379,7 @@
     interface FastEthernet0/1
     ip ospf message-digest-key 1 md5 CNIS2026
 
-**Multilayer Switch (MLS Building C)**[cite: 44]
+**Multilayer Switch (MLS Building C)**
 
     router ospf 1
     router-id 3.3.3.3
@@ -263,12 +395,15 @@
 
 ---
 
-### 4. Konfigurasi Access Control List (ACL 100)[cite: 44, 45]
+### 5. Konfigurasi Access Control List (ACL 100)
 
-    access-list 100 permit icmp any 192.168.3.160 0.0.0.15 echo-reply
+**Multilayer Switch (MLS Building A)**
+
+    access-list 100 permit icmp any 192.168.3.160 0.0.0.15
+    echo-reply
     access-list 100 deny icmp any 192.168.3.160 0.0.0.15 echo
     access-list 100 permit ip any any
-    !
+    22
     interface vlan 10
     ip access-group 100 in
     interface vlan 20
@@ -277,12 +412,27 @@
     ip access-group 100 in
     interface vlan 40
     ip access-group 100 in
+
+
+**Multilayer Switch (MLS Building B)**
+
+    access-list 100 permit icmp any 192.168.3.160 0.0.0.15
+    echo-reply
+    access-list 100 deny icmp any 192.168.3.160 0.0.0.15 echo
+    access-list 100 permit ip any any
     interface vlan 110
-    ip access-group 100 in
+    ip access-group 10 in
     interface vlan 120
     ip access-group 100 in
     interface vlan 130
     ip access-group 100 in
+
+**Multilayer Switch (MLS Building C)**
+
+    access-list 100 permit icmp any 192.168.3.160 0.0.0.15
+    echo-reply
+    access-list 100 deny icmp any 192.168.3.160 0.0.0.15 echo
+    access-list 100 permit ip any any
     interface vlan 210
     ip access-group 100 in
     interface vlan 220
@@ -290,34 +440,26 @@
 
 ---
 
-### 5. Konfigurasi DHCP Snooping[cite: 46, 47, 48]
-
+### 6. Konfigurasi DHCP Snooping
+**Swicth**
     ip dhcp snooping
-    ip dhcp snooping vlan 10,20,30,40,110,120,130,140,210,220
+    ip dhcp snooping vlan X
     !
     interface FastEthernet0/1
     ip dhcp snooping trust
     !
-    interface FastEthernet0/2
-    ip dhcp snooping limit rate 10
-    interface FastEthernet0/3
+    interface FastEthernet X/X
     ip dhcp snooping limit rate 10
 
 ---
 
-### 6. Konfigurasi Port Security[cite: 48, 49]
-
-    interface FastEthernet0/2
+### 7. Konfigurasi Port Security
+**Swicth**
+    interface FastEthernet X/X
     switchport mode access
     switchport port-security
     switchport port-security maximum 2
     switchport port-security mac-address sticky
     switchport port-security violation restrict
     !
-    interface FastEthernet0/3
-    switchport mode access
-    switchport port-security
-    switchport port-security maximum 2
-    switchport port-security mac-address sticky
-    switchport port-security violation restrict
-
+ 
