@@ -79,6 +79,9 @@
 | **PC/Laptop** | PT-PC / PT-Laptop | 923 | End device pengujian |
 | **Server DHCP** | Server / L3 Device | 1 | Layanan DHCP |
 
+## Topologi yang digunakan
+<img width="1891" height="805" alt="image" src="https://github.com/user-attachments/assets/63db0689-1807-4fc3-9b0b-7ee047323f89" />
+
 
 
 
