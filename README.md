@@ -440,6 +440,7 @@
 
 ### 6. Konfigurasi DHCP Snooping
 **Swicth**
+
     ip dhcp snooping
     ip dhcp snooping vlan X
     !
@@ -453,6 +454,7 @@
 
 ### 7. Konfigurasi Port Security
 **Swicth**
+
     interface FastEthernet X/X
     switchport mode access
     switchport port-security
