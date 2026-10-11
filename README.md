@@ -102,6 +102,9 @@ interface FastEthernet0/5
 switchport trunk encapsulation dot1q
 switchport mode trunk
 !
+
+
+
 **Konfigurasi Trunking Pada MLS Building C** 
 
 
