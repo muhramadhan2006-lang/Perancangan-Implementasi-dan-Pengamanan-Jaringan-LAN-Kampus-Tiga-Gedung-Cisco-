@@ -104,6 +104,14 @@ switchport mode trunk
 !
 ```text
 
-**Konfigurasi Trunking Pada MLS Building C** 
-
+**Konfigurasi Trunking Pada MLS Building C**
+```text 
+interface FastEthernet0/2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+!
+interface FastEthernet0/3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+!
 
