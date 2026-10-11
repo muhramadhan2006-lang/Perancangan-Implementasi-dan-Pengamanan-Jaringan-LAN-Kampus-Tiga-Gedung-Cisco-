@@ -45,3 +45,17 @@
 | **B-Fl.4** | VLAN 140 | `/28 (255.255.255.240)` | `192.168.3.161` | Admin |
 | **C-Fl.1** | VLAN 210 | `/23 (255.255.254.0)` | `172.16.0.1` | User |
 | **C-Fl.2** | VLAN 220 | `/24 (255.255.255.0)` | `192.168.4.1` | User |
+
+## Daftar Perangkat yang Digunakan
+| Jenis Perangkat | Model/Simulasi | Jumlah | Fungsi |
+| :--- | :--- | :---: | :--- |
+| **Router** | ISR 4331 / 2911 (PT) | 3 | Backbone/OSPF, DHCP untuk VLAN 140 |
+| **L3 Switch** | PT Multilayer Switch | 3 | SVI, Inter-VLAN, dan OSPF |
+| **L2 Switch** | PT Catalyst 2960 | 42 | Akses user |
+| **PC/Laptop** | PT-PC / PT-Laptop | 923 | End device pengujian |
+| **Server DHCP** | Server / L3 Device | 1 | Layanan DHCP |
+
+
+
+
+
