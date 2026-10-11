@@ -227,8 +227,6 @@
 
 **Router Building A**
 
-**Router Building A**
-
       interface GigabitEthernet0/0/0
       ip address 10.1.0.5 255.255.255.252
       duplex auto
