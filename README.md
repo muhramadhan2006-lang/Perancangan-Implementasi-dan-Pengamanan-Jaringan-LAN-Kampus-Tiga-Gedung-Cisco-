@@ -1,4 +1,4 @@
-## **Perancangan, Implementasi, dan Pengamanan Jaringan LAN Kampus Tiga Gedung menggunakan Cisco Packet Tracer, OSPF Multi-Area, VLAN, ACL, DHCP Snooping, dan Port Security**
+<img width="492" height="82" alt="image" src="https://github.com/user-attachments/assets/d12645c2-d0b3-47e4-9332-decfc749438a" />## **Perancangan, Implementasi, dan Pengamanan Jaringan LAN Kampus Tiga Gedung menggunakan Cisco Packet Tracer, OSPF Multi-Area, VLAN, ACL, DHCP Snooping, dan Port Security**
 
 ## Syarat dan Ketentuan
 - **Skala Perangkat per Gedung:** 
@@ -464,4 +464,37 @@
     switchport port-security violation restrict
     end
     !
- 
+
+
+ ## Pengujian
+ ### 1. Hasil OSPF
+ **Pada Router**
+<img width="492" height="82" alt="image" src="https://github.com/user-attachments/assets/0242e2fb-6233-4559-b9d1-98065f9ddca9" />
+
+
+ **Pada Multilayer Switch**
+ <img width="510" height="133" alt="image" src="https://github.com/user-attachments/assets/d0ba9b60-6591-44c5-ad6a-59b963193349" />
+
+ ### 2. Hasil VLAN
+ **Pada Access Switch**
+<img width="423" height="395" alt="image" src="https://github.com/user-attachments/assets/d8d8695e-e315-48e7-a1a7-ab78c364f81a" />
+
+ **Pada Multilayer Switch**
+<img width="467" height="192" alt="image" src="https://github.com/user-attachments/assets/f182a657-861c-414e-a788-8dbf9283e416" />
+
+## 3. Hasil Trunk
+ **Pada Access Switch**
+<img width="355" height="391" alt="image" src="https://github.com/user-attachments/assets/0e1d23fe-9f3b-492d-af93-e018e41cd6e2" />
+
+ **Pada Multilayer Switch**
+<img width="510" height="240" alt="image" src="https://github.com/user-attachments/assets/6c8afabc-f0ea-4299-bae8-b2c3e164461e" />
+
+## 4. Hasil ACL 100 pada Multilayer Switch
+<img width="420" height="166" alt="image" src="https://github.com/user-attachments/assets/1652d936-c103-42ed-8bce-580603bddc33" />
+
+## 5. Set up DHCP Server pada Server pt
+<img width="402" height="402" alt="image" src="https://github.com/user-attachments/assets/25577425-62ae-4e7e-a1ef-7fe574d11dc9" />
+
+## 6. Hasil Port Security pada Acces Switch
+<img width="580" height="102" alt="image" src="https://github.com/user-attachments/assets/fb2e51c1-9527-457e-a41a-08175b433866" />
+
