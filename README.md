@@ -84,33 +84,240 @@
 
 ## Konfigurasi di Cisco Paket Tracer
 ### 1. Konfigurasi Trunking
-**Konfigurasi Trunking Pada MLS Building A dan Building B**
-```text
-interface FastEthernet0/2
-switchport trunk encapsulation dot1q
-switchport mode trunk
-!
-interface FastEthernet0/3
-switchport trunk encapsulation dot1q
-switchport mode trunk
-!
-interface FastEthernet0/4
-switchport trunk encapsulation dot1q
-switchport mode trunk
-!
-interface FastEthernet0/5
-switchport trunk encapsulation dot1q
-switchport mode trunk
-!
 
-**Konfigurasi Trunking Pada MLS Building C**
-```text 
-interface FastEthernet0/2
-switchport trunk encapsulation dot1q
-switchport mode trunk
-!
-interface FastEthernet0/3
-switchport trunk encapsulation dot1q
-switchport mode trunk
-!
+**Konfigurasi Trunking Pada MLS Building A dan Building B**[cite: 33]
+
+    interface FastEthernet0/2
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+    !
+    interface FastEthernet0/3
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+    !
+    interface FastEthernet0/4
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+    !
+    interface FastEthernet0/5
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+
+**Konfigurasi Trunking Pada MLS Building C**[cite: 33]
+
+    interface FastEthernet0/2
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+    !
+    interface FastEthernet0/3
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+
+---
+
+### 2. Konfigurasi VLAN, SVI, dan DHCP Helper-Address (Multilayer Switch)
+
+**MLS Building A**[cite: 34]
+
+    interface Vlan10
+    ip address 192.168.0.1 255.255.255.128
+    ip helper-address 192.168.3.162
+    !
+    interface Vlan20
+    ip address 192.168.0.129 255.255.255.128
+    ip helper-address 192.168.3.162
+    !
+    interface Vlan30
+    ip address 192.168.1.1 255.255.255.192
+    ip helper-address 192.168.3.162
+    !
+    interface Vlan40
+    ip address 192.168.1.65 255.255.255.240
+    ip helper-address 192.168.3.162
+
+**MLS Building B**[cite: 35]
+
+    interface Vlan110
+    ip address 192.168.2.1 255.255.255.0
+    ip helper-address 192.168.3.162
+    !
+    interface Vlan120
+    ip address 192.168.3.1 255.255.255.128
+    ip helper-address 192.168.3.162
+    !
+    interface Vlan130
+    ip address 192.168.3.129 255.255.255.224
+    ip helper-address 192.168.3.162
+    !
+    interface Vlan140
+    ip address 192.168.3.161 255.255.255.240
+
+**MLS Building C**[cite: 36]
+
+    interface Vlan210
+    ip address 172.16.0.1 255.255.254.0
+    ip helper-address 192.168.3.162
+    !
+    interface Vlan220
+    ip address 192.168.4.1 255.255.255.0
+    ip helper-address 192.168.3.162
+
+---
+
+### 3. Konfigurasi Routing OSPF Multi-Area & Autentikasi MD5
+
+**Router Building A**[cite: 42]
+
+    router ospf 1
+    router-id 11.11.11.11
+    log-adjacency-changes
+    area 0 authentication message-digest
+    network 10.1.0.0 0.0.0.3 area 0
+    network 10.1.0.4 0.0.0.3 area 0
+    exit
+    interface GigabitEthernet0/0/1
+    ip ospf message-digest-key 1 md5 CNIS2026
+    exit
+    interface GigabitEthernet0/0/0
+    ip ospf message-digest-key 1 md5 CNIS2026
+
+**Router Building B**[cite: 42]
+
+    router ospf 1
+    router-id 22.22.22.22
+    log-adjacency-changes
+    area 0 authentication message-digest
+    network 10.1.1.0 0.0.0.3 area 0
+    network 10.1.0.4 0.0.0.3 area 0
+    network 10.1.2.0 0.0.0.3 area 0
+    exit
+    interface GigabitEthernet0/0
+    ip ospf message-digest-key 1 md5 CNIS2026
+    exit
+    interface GigabitEthernet0/1
+    ip ospf message-digest-key 1 md5 CNIS2026
+    exit
+    interface GigabitEthernet0/2
+    ip ospf message-digest-key 1 md5 CNIS2026
+
+**Router Building C**[cite: 43]
+
+    router ospf 1
+    router-id 33.33.33.33
+    log-adjacency-changes
+    area 0 authentication message-digest
+    network 10.1.3.0 0.0.0.3 area 0
+    network 10.1.2.0 0.0.0.3 area 0
+    exit
+    interface GigabitEthernet0/0/0
+    ip ospf message-digest-key 1 md5 CNIS2026
+    exit
+    interface GigabitEthernet0/0/1
+    ip ospf message-digest-key 1 md5 CNIS2026
+
+**Multilayer Switch (MLS Building A)**[cite: 43]
+
+    router ospf 1
+    router-id 1.1.1.1
+    log-adjacency-changes
+    area 0 authentication message-digest
+    network 192.168.0.0 0.0.0.127 area 10
+    network 192.168.0.128 0.0.0.127 area 10
+    network 192.168.1.0 0.0.0.63 area 10
+    network 192.168.1.64 0.0.0.15 area 10
+    network 10.1.0.0 0.0.0.3 area 0
+    area 10 range 192.168.0.0 255.255.254.0
+    exit
+    interface FastEthernet0/1
+    ip ospf message-digest-key 1 md5 CNIS2026
+
+**Multilayer Switch (MLS Building B)**[cite: 43, 44]
+
+    router ospf 1
+    router-id 2.2.2.2
+    log-adjacency-changes
+    area 0 authentication message-digest
+    network 192.168.2.0 0.0.0.255 area 20
+    network 192.168.3.0 0.0.0.127 area 20
+    network 192.168.3.128 0.0.0.31 area 20
+    network 192.168.3.160 0.0.0.15 area 20
+    network 10.1.1.0 0.0.0.3 area 0
+    area 20 range 192.168.2.0 255.255.254.0
+    exit
+    interface FastEthernet0/1
+    ip ospf message-digest-key 1 md5 CNIS2026
+
+**Multilayer Switch (MLS Building C)**[cite: 44]
+
+    router ospf 1
+    router-id 3.3.3.3
+    log-adjacency-changes
+    area 0 authentication message-digest
+    network 172.16.0.0 0.0.1.255 area 30
+    network 192.168.4.0 0.0.0.255 area 30
+    network 10.1.3.0 0.0.0.3 area 0
+    area 30 range 172.16.0.0 255.255.254.0
+    exit
+    interface FastEthernet0/1
+    ip ospf message-digest-key 1 md5 CNIS2026
+
+---
+
+### 4. Konfigurasi Access Control List (ACL 100)[cite: 44, 45]
+
+    access-list 100 permit icmp any 192.168.3.160 0.0.0.15 echo-reply
+    access-list 100 deny icmp any 192.168.3.160 0.0.0.15 echo
+    access-list 100 permit ip any any
+    !
+    interface vlan 10
+    ip access-group 100 in
+    interface vlan 20
+    ip access-group 100 in
+    interface vlan 30
+    ip access-group 100 in
+    interface vlan 40
+    ip access-group 100 in
+    interface vlan 110
+    ip access-group 100 in
+    interface vlan 120
+    ip access-group 100 in
+    interface vlan 130
+    ip access-group 100 in
+    interface vlan 210
+    ip access-group 100 in
+    interface vlan 220
+    ip access-group 100 in
+
+---
+
+### 5. Konfigurasi DHCP Snooping[cite: 46, 47, 48]
+
+    ip dhcp snooping
+    ip dhcp snooping vlan 10,20,30,40,110,120,130,140,210,220
+    !
+    interface FastEthernet0/1
+    ip dhcp snooping trust
+    !
+    interface FastEthernet0/2
+    ip dhcp snooping limit rate 10
+    interface FastEthernet0/3
+    ip dhcp snooping limit rate 10
+
+---
+
+### 6. Konfigurasi Port Security[cite: 48, 49]
+
+    interface FastEthernet0/2
+    switchport mode access
+    switchport port-security
+    switchport port-security maximum 2
+    switchport port-security mac-address sticky
+    switchport port-security violation restrict
+    !
+    interface FastEthernet0/3
+    switchport mode access
+    switchport port-security
+    switchport port-security maximum 2
+    switchport port-security mac-address sticky
+    switchport port-security violation restrict
 
